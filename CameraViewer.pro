@@ -33,8 +33,8 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     CameraCapturer.h \
-    asmOpenCV.h \
-    EstereoCameraCapturer.h
+    EstereoCameraCapturer.h \
+    QtOpenCVInteroperability.h
 
 FORMS    += mainwindow.ui
 

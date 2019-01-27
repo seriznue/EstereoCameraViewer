@@ -3,7 +3,7 @@
 #include <EstereoCameraCapturer.h>
 #include <QPixmap>
 #include <opencv2/imgproc/imgproc.hpp>
-#include <asmOpenCV.h>
+#include <QtOpenCVInteroperability.h>
 
 static const int CAM_WIDTH = 640;
 static const int CAM_HEIGHT = 680;
@@ -56,14 +56,13 @@ void MainWindow::ShowImageCaptured()
 
     estereoCameraCapturerPtr1->GetCapture(cvImg1, cvImg2);
 
-    QImage qimage1 = ASM::cvMatToQImage(cvImg1);
+    QImage qimage1 = QtOpenCV::cvMatToQImage(cvImg1);
     this->ui->leftImageLabel->setPixmap(QPixmap::fromImage(qimage1));
 
-    QImage qimage2 = ASM::cvMatToQImage(cvImg2);
+    QImage qimage2 = QtOpenCV::cvMatToQImage(cvImg2);
     this->ui->rightImageLabel->setPixmap(QPixmap::fromImage(qimage2));
 
     /*
-
     cvImg1 = ASM::QImageToCvMat(*qImg1, true);
     cv::Mat imgGrayscale, imgBlurred, imgCanny;
     cv::cvtColor(cvImg1, imgGrayscale, CV_BGR2GRAY);                   // convert to grayscale

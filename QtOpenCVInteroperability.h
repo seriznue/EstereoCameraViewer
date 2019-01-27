@@ -1,11 +1,5 @@
-#ifndef ASM_OPENCV_H
-#define ASM_OPENCV_H
-
-/**
-   Functions to convert between OpenCV's cv::Mat and Qt's QImage and QPixmap.
-   Andy Maloney <asmaloney@gmail.com>
-   https://asmaloney.com/2013/11/code/converting-between-cvmat-and-qimage-or-qpixmap
-**/
+#ifndef QT_OPENCV_INTEROPERABILITY_H
+#define QT_OPENCV_INTEROPERABILITY_H
 
 #include <QDebug>
 #include <QImage>
@@ -39,7 +33,7 @@
 #error Some of QImage's formats are endian-dependant. This file assumes little endian. See comment at top of header.
 #endif
 
-namespace ASM {
+namespace QtOpenCV {
    // NOTE: This does not cover all cases - it should be easy to add new ones as required.
    inline QImage  cvMatToQImage( const cv::Mat &inMat )
    {

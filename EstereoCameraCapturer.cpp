@@ -32,8 +32,8 @@ void EstereoCameraCapturer::Start()
         m_capture1.open(0); // default: 0
         m_capture2.open(1); // default: 0
 
-        if(!m_capture1.isOpened()) return;
-        if(!m_capture2.isOpened()) return;
+        //if(!m_capture1.isOpened()) return;
+        //if(!m_capture2.isOpened()) return;
 
         // set the acquired frame size to the size of its container
         m_capture1.set(CAP_PROP_FRAME_WIDTH, m_width);
@@ -67,12 +67,8 @@ void EstereoCameraCapturer::CameraTimerTimeout()
 {
     if(!m_isCameraRunning) return;
 
-    if(!m_capture1.isOpened()) return;
-
-    if(!m_capture2.isOpened()) return;
-
-    m_capture1 >> m_image1;
-    m_capture2 >> m_image2;
+    if(m_capture1.isOpened()) m_capture1 >> m_image1;
+    if(m_capture2.isOpened()) m_capture2 >> m_image2;
 
     emit imageCaptured();
 }
@@ -80,9 +76,15 @@ void EstereoCameraCapturer::CameraTimerTimeout()
 void EstereoCameraCapturer::GetCapture(cv::Mat &cvImage1, cv::Mat &cvImage2) const {
     disconnect(m_cameraTimer, SIGNAL(timeout()), this, SLOT(CameraTimerTimeout()));
 
-    cvImage1 = (m_image1.clone());
+    if(m_capture1.isOpened())
+        cvImage1 = (m_image1.clone());
+    else
+        cvImage1 = Mat(m_height, m_width, CV_8UC3, Scalar(0,0,0));
 
-    cvImage2 = (m_image2.clone());
+    if(m_capture2.isOpened())
+        cvImage2 = (m_image2.clone());
+    else
+        cvImage2 = Mat(m_height, m_width, CV_8UC3, Scalar(0,0,0));
 
     connect(m_cameraTimer, SIGNAL(timeout()), this, SLOT(CameraTimerTimeout()));
 }
