@@ -29,12 +29,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         mainwindow.cpp \
     CameraCapturer.cpp \
-    EstereoCameraCapturer.cpp
+    EstereoCameraCapturer.cpp \
+    CvHelper.cpp
 
 HEADERS  += mainwindow.h \
     CameraCapturer.h \
     EstereoCameraCapturer.h \
-    QtOpenCVInteroperability.h
+    QtOpenCVInteroperability.h \
+    CvHelper.h
 
 FORMS    += mainwindow.ui
 

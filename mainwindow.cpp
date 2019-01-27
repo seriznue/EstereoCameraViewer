@@ -4,6 +4,7 @@
 #include <QPixmap>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <QtOpenCVInteroperability.h>
+#include <CvHelper.h>
 
 static const int CAM_WIDTH = 640;
 static const int CAM_HEIGHT = 680;
@@ -62,21 +63,14 @@ void MainWindow::ShowImageCaptured()
     QImage qimage2 = QtOpenCV::cvMatToQImage(cvImg2);
     this->ui->rightImageLabel->setPixmap(QPixmap::fromImage(qimage2));
 
-    /*
-    cvImg1 = ASM::QImageToCvMat(*qImg1, true);
-    cv::Mat imgGrayscale, imgBlurred, imgCanny;
-    cv::cvtColor(cvImg1, imgGrayscale, CV_BGR2GRAY);                   // convert to grayscale
-    cv::GaussianBlur(imgGrayscale,imgBlurred,cv::Size(5, 5),1.8);           // Blur Effect
-    double lowTh = 10 , highTh = 100;
-    cv::Canny(imgBlurred,imgCanny,lowTh,highTh);       // Canny Edge Image
-    QImage qImgCammy = ASM::cvMatToQImage(imgCanny);
-    this->ui->imageLabel->setPixmap(QPixmap::fromImage(qImgCammy));
+    cv::Mat cvCanny1, cvCanny2;
 
-    //qImg1->save("/home/seriznue/kaka2.png");
-    if(qImg1) {
-        this->ui->imageLabel->setPixmap(QPixmap::fromImage(qImgCammy));
-        delete qImg1;
-        qImg1 = 0;
-    }
-    */
+    CvHelper::Canny(cvImg1, cvCanny1);
+    CvHelper::Canny(cvImg2, cvCanny2);
+
+    QImage qimageCanny1 = QtOpenCV::cvMatToQImage(cvCanny1);
+    this->ui->leftImageLabel_2->setPixmap(QPixmap::fromImage(qimageCanny1));
+
+    QImage qimageCanny2 = QtOpenCV::cvMatToQImage(cvCanny2);
+    this->ui->rightImageLabel_2->setPixmap(QPixmap::fromImage(qimageCanny2));
 }
